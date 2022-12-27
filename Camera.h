@@ -16,7 +16,7 @@ class Camera
 public:
 	// Stores the main vectors of the camera
 	glm::vec3 Position;
-	glm::vec3 Orientation = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 Orientation = glm::vec3(4.0f, -0.5f, -1.0f);
 	glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::mat4 cameraMatrix = glm::mat4(1.0f);
 
@@ -28,7 +28,7 @@ public:
 	int height;
 
 	// Adjust the speed of the camera and it's sensitivity when looking around
-	float speed = 3.0f;
+	float speed = 150.0f;
 	float sensitivity = 100.0f;
 
 	// Camera constructor to set up initial values
