@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <list>
 
 #include "include/glad/glad.h"
 #include "include/GLFW/glfw3.h"
@@ -18,8 +19,8 @@
 #include "EBO.h"
 #include "Camera.h"
 
-const unsigned int width = 800;
-const unsigned int height = 800;
+const unsigned int width = 1366;
+const unsigned int height = 768;
 
 
 
@@ -123,8 +124,8 @@ GLuint indicesLand[] = {
 
 
 GLfloat verticesRoad[] = {
-	-1.55f, -0.40f,  1.55f,     0.83f, 0.10f, 0.64f,		0.0f, 0.0f,		 0.0f, 0.5f,  0.3f,
-	 1.55f, -0.40f,  1.55f,     0.83f, 0.10f, 0.64f,		3.0f, 0.0f,		 0.0f, 0.5f,  0.4f,
+	-1.55f, -0.40f,  1.00f,     0.83f, 0.10f, 0.64f,		0.0f, 0.0f,		 0.0f, 0.5f,  0.3f,
+	 1.55f, -0.40f,  1.00f,     0.83f, 0.10f, 0.64f,		3.0f, 0.0f,		 0.0f, 0.5f,  0.4f,
 	 1.55f, -0.40f,  0.55f,     0.83f, 0.10f, 0.64f,		0.0f, 3.0f,		 0.0f, 0.5f,  0.4f,
 	-1.55f, -0.40f,  0.55f,     0.83f, 0.10f, 0.64f,		3.0f, 3.0f,		 0.0f, 0.5f,  0.4f
 };
@@ -315,45 +316,11 @@ int main()
 	lightVBO.Unbind();
 	lightEBO.Unbind();
 
-	//set model
+	//set light model
 	glm::vec4 lightColor = glm::vec4(2.0f, 2.0f, 2.0f, 2.0f);
-	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
+	glm::vec3 lightPos = glm::vec3(0.0f, 5.0f, 1.0f);
 	glm::mat4 lightModel = glm::mat4(1.0f);
 	lightModel = glm::translate(lightModel, lightPos);
-
-	glm::vec3 buildPos = glm::vec3(-0.0f, -0.0f, -0.0f);
-	glm::mat4 buildModel = glm::mat4(1.0f);
-	buildModel = glm::translate(buildModel, buildPos);
-
-	//set uniform model
-	lightShader.Activate();
-	glUniformMatrix4fv(glGetUniformLocation(lightShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(lightModel));
-	glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-
-	plainShader.Activate();
-	glUniformMatrix4fv(glGetUniformLocation(plainShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(buildModel));
-	glUniform4f(glGetUniformLocation(plainShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-	glUniform3f(glGetUniformLocation(plainShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
-
-	buildingShader.Activate();
-	glUniformMatrix4fv(glGetUniformLocation(buildingShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(buildModel));
-	glUniform4f(glGetUniformLocation(buildingShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-	glUniform3f(glGetUniformLocation(buildingShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
-
-	landShader.Activate();
-	glUniformMatrix4fv(glGetUniformLocation(landShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(buildModel));
-	glUniform4f(glGetUniformLocation(landShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-	glUniform3f(glGetUniformLocation(landShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
-
-	roadShader.Activate();
-	glUniformMatrix4fv(glGetUniformLocation(roadShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(buildModel));
-	glUniform4f(glGetUniformLocation(roadShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-	glUniform3f(glGetUniformLocation(roadShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
-	
-	roofShader.Activate();
-	glUniformMatrix4fv(glGetUniformLocation(roofShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(buildModel));
-	glUniform4f(glGetUniformLocation(roofShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-	glUniform3f(glGetUniformLocation(roofShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
 
 	//Load textures
@@ -375,12 +342,15 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	// Create camera object
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 2.0f, 1.5f));
 
 
-	glm::vec3 testPos = glm::vec3(-1.0f, -1.0f, 0.0f);
-	glm::mat4 testModel = glm::mat4(1.0f);
-	testModel = glm::translate(testModel, testPos);
+	// glm::vec3 testPos = glm::vec3(-1.0f, -1.0f, 0.0f);
+	// glm::mat4 testModel = glm::mat4(1.0f);
+	// testModel = glm::translate(testModel, testPos);
+
+	// glm::vec3 translationA(0.0f, 0.0f, 0.0f);
+	// glm::vec3 translationB(0.5f, 0.0f, 0.2f);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -389,70 +359,113 @@ int main()
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Handles camera inputs
-		camera.Inputs(window);
-		// Updates and exports the camera matrix to the Vertex Shader
-		camera.updateMatrix(30.0f, 0.1f, 100.0f);
+
+		// set build models
+		std::list<glm::mat4> modelList;
+
+		// generate buildings position
+		for (int posX = 0; posX <= (3 * 10); posX = posX + 3){
+			for (int posZ = 0; posZ <= (2 * 5); posZ = posZ + 2){
+				glm::mat4 buildModel = glm::mat4(1.0f);
+				buildModel = glm::translate(buildModel, glm::vec3(posX * 1.0f, -0.0f, posZ * 1.0f));
+				modelList.push_back(buildModel);
+
+				//side 2
+				glm::mat4 buildModel2 = glm::mat4(1.0f);
+				buildModel2 = glm::translate(buildModel2, glm::vec3(posX * 1.0f, 0.0f, posZ * 1.0f));
+				buildModel2 = glm::rotate(buildModel2, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+				modelList.push_back(buildModel2);
+			}
+		};
 
 
-		//draw building
-		buildingShader.Activate();
-		glUniform3f(glGetUniformLocation(buildingShader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
-		
-		// Set camera
-		//Export the camMatrix to the Shader
-		camera.Matrix(buildingShader, "camMatrix");
-		
-		brickTex.Bind();
-		VAOBuildings.Bind();
-		glDrawElements(GL_TRIANGLES, sizeof(indicesBuildings) / sizeof(int), GL_UNSIGNED_INT, 0);
+		//print objects
+		std::list<glm::mat4>::iterator model;
+
+    	for (model = modelList.begin(); model != modelList.end(); ++model){
+			//set uniform model
+			lightShader.Activate();
+			glUniformMatrix4fv(glGetUniformLocation(lightShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(lightModel));
+			glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+
+			plainShader.Activate();
+			glUniformMatrix4fv(glGetUniformLocation(plainShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(*model));
+			glUniform4f(glGetUniformLocation(plainShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+			glUniform3f(glGetUniformLocation(plainShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+
+			buildingShader.Activate();
+			glUniformMatrix4fv(glGetUniformLocation(buildingShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(*model));
+			glUniform4f(glGetUniformLocation(buildingShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+			glUniform3f(glGetUniformLocation(buildingShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+
+			landShader.Activate();
+			glUniformMatrix4fv(glGetUniformLocation(landShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(*model));
+			glUniform4f(glGetUniformLocation(landShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+			glUniform3f(glGetUniformLocation(landShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+
+			roadShader.Activate();
+			glUniformMatrix4fv(glGetUniformLocation(roadShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(*model));
+			glUniform4f(glGetUniformLocation(roadShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+			glUniform3f(glGetUniformLocation(roadShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+			
+			roofShader.Activate();
+			glUniformMatrix4fv(glGetUniformLocation(roofShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(*model));
+			glUniform4f(glGetUniformLocation(roofShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+			glUniform3f(glGetUniformLocation(roofShader.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
 
 
-		// //Draw plain
-		// plainShader.Activate();
-		// glUniform3f(glGetUniformLocation(plainShader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
-		
-		// camera.Matrix(plainShader, "camMatrix");
-		
-		// grassTex.Bind();
-		// VAOPlain.Bind();
-		// glDrawElements(GL_TRIANGLES, sizeof(indicesPlain) / sizeof(int), GL_UNSIGNED_INT, 0);
+			// Handles camera inputs
+			camera.Inputs(window);
+			// Updates and exports the camera matrix to the Vertex Shader
+			camera.updateMatrix(30.0f, 0.1f, 100.0f);
 
-		
-
-		//draw land
-		landShader.Activate();
-		glUniform3f(glGetUniformLocation(landShader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
-		
-		camera.Matrix(landShader, "camMatrix");
-		
-		landTex.Bind();
-		VAOLand.Bind();
-		glDrawElements(GL_TRIANGLES, sizeof(indicesLand) / sizeof(int), GL_UNSIGNED_INT, 0);
+			//draw land
+			landShader.Activate();
+			glUniform3f(glGetUniformLocation(landShader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
+			
+			camera.Matrix(landShader, "camMatrix");
+			
+			landTex.Bind();
+			VAOLand.Bind();
+			glDrawElements(GL_TRIANGLES, sizeof(indicesLand) / sizeof(int), GL_UNSIGNED_INT, 0);
 
 
-		// draw road
-		roadShader.Activate();
-		
-		glUniform3f(glGetUniformLocation(roadShader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
-		
-		camera.Matrix(roadShader, "camMatrix");
-		
-		roadTex.Bind();
-		VAORoad.Bind();
-		glDrawElements(GL_TRIANGLES, sizeof(indicesRoad) / sizeof(int), GL_UNSIGNED_INT, 0);
+			// draw road
+			roadShader.Activate();
+			
+			glUniform3f(glGetUniformLocation(roadShader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
+			
+			camera.Matrix(roadShader, "camMatrix");
+			
+			roadTex.Bind();
+			VAORoad.Bind();
+			glDrawElements(GL_TRIANGLES, sizeof(indicesRoad) / sizeof(int), GL_UNSIGNED_INT, 0);
 
 
-		//draw roof
-		roofShader.Activate();
-		glUniform3f(glGetUniformLocation(roofShader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
-		
-		camera.Matrix(roofShader, "camMatrix");
-		
-		roofTex.Bind();
-		VAORoof.Bind();
-		glDrawElements(GL_TRIANGLES, sizeof(indicesRoof) / sizeof(int), GL_UNSIGNED_INT, 0);
+			//draw roof
+			roofShader.Activate();
+			glUniform3f(glGetUniformLocation(roofShader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
+			
+			camera.Matrix(roofShader, "camMatrix");
+			
+			roofTex.Bind();
+			VAORoof.Bind();
+			glDrawElements(GL_TRIANGLES, sizeof(indicesRoof) / sizeof(int), GL_UNSIGNED_INT, 0);
+
+			//draw building
+			buildingShader.Activate();
+			glUniform3f(glGetUniformLocation(buildingShader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
+			
+			// Set camera
+			//Export the camMatrix to the Shader
+			camera.Matrix(buildingShader, "camMatrix");
+			
+			brickTex.Bind();
+			VAOBuildings.Bind();
+
+			glDrawElements(GL_TRIANGLES, sizeof(indicesBuildings) / sizeof(int), GL_UNSIGNED_INT, 0);
+		}
 
 
 		//draw light
@@ -462,6 +475,22 @@ int main()
 		
 		lightVAO.Bind();
 		glDrawElements(GL_TRIANGLES, sizeof(lightIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
+
+
+		// const float radius = 3.0f;
+		// float camX = sin(glfwGetTime()) * radius;
+		// float camY = cos(glfwGetTime()) * radius;
+		// glm::mat4 transform = glm::mat4(1.0f);
+        // buildModel = glm::translate(buildModel, translationA);
+		// unsigned int transformLoc = glGetUniformLocation(buildingShader.ID, "aUniform");
+        // lightModel = glm::rotate(lightModel, (float)glfwGetTime(), glm::vec3(camX, camY, 1.0f));
+		// glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(lightModel));
+
+		// glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(buildModel));
+        
+
+		// glDrawElements(GL_TRIANGLES, sizeof(indicesBuildings) / sizeof(int), GL_UNSIGNED_INT, 0);
+
 
 
 		glfwSwapBuffers(window);
