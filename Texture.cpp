@@ -1,6 +1,6 @@
 #include"Texture.h"
 
-Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType)
+Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum internalFormat, GLenum format, GLenum pixelType)
 {
 	type = texType;
 
@@ -26,7 +26,7 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 	glTexParameteri(texType, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 
-	glTexImage2D(texType, 0, format, widthImg, heightImg, 0, format, pixelType, bytes);
+	glTexImage2D(texType, 0, internalFormat, widthImg, heightImg, 0, format, pixelType, bytes);
 	// Generates MipMaps
 	glGenerateMipmap(texType);
 
