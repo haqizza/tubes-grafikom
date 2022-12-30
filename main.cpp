@@ -23,7 +23,8 @@ const unsigned int width = 1366;
 const unsigned int height = 768;
 
 
-GLfloat verticesBuildings2[] = {
+GLfloat verticesBuildings2[] = 
+{
 	//bangunan
 	-0.35f, -0.40f, -0.15f,     0.83f, 0.70f, 0.44f,	0.3f, 0.0f,		0.0f, 0.0f,  0.0f,
 	-0.35f, -0.40f,  0.15f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,		0.0f, 0.0f,  0.0f,//L
@@ -75,7 +76,8 @@ GLuint indicesBuildings2[] =
 	10, 12, 14
 };
 
-GLfloat verticesBuildings[] = {
+GLfloat verticesBuildings[] = 
+{
 	//1
 	 //bangunan
 	-0.35f, -0.40f,  0.35f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,		0.0f, 0.0f,  0.0f,
@@ -130,7 +132,8 @@ GLuint indicesBuildings[] =
 };
 
 
-GLfloat verticesPlain[] = {
+GLfloat verticesPlain[] = 
+{
 	-1.55f, -0.40f,  0.55f,     0.00f, 0.10f, 0.00f,		0.0f, 0.0f,		0.0f, 0.0f,  0.1f,
 	-0.55f, -0.40f,  0.55f,     0.00f, 0.10f, 0.00f,		9.0f, 0.0f,		0.0f, 0.0f,  0.0f,
 	-0.55f, -0.40f, -0.55f,     0.00f, 0.10f, 0.00f,		0.0f, 9.0f,		0.0f, 0.0f,  0.0f,
@@ -142,7 +145,8 @@ GLfloat verticesPlain[] = {
 	 0.55f, -0.40f, -0.55f,     0.00f, 0.10f, 0.00f,		9.0f, 9.0f,		0.0f, 0.0f,  0.1f
 };
 
-GLuint indicesPlain[] = {
+GLuint indicesPlain[] = 
+{
 	0, 1, 3,
 	1, 2, 3,
 
@@ -151,31 +155,36 @@ GLuint indicesPlain[] = {
 };
 
 
-GLfloat verticesLand[] = {
+GLfloat verticesLand[] = 
+{
 	-1.50f, -0.40f,  0.55f,     0.83f, 0.10f, 0.64f,		0.0f, 0.0f,		0.0f, 0.0f,  0.0f, 
 	 1.50f, -0.40f,  0.55f,     0.83f, 0.10f, 0.64f,		3.0f, 0.0f,		0.0f, 0.0f,  0.1f,
 	 1.50f, -0.40f, -0.55f,     0.83f, 0.10f, 0.64f,		0.0f, 3.0f,		0.0f, 0.0f,  0.0f,
 	-1.50f, -0.40f, -0.55f,     0.83f, 0.10f, 0.64f,		3.0f, 3.0f,		0.0f, 0.0f, -0.025f
 };
 
-GLuint indicesLand[] = {
+GLuint indicesLand[] = 
+{
 	0, 1, 3,
 	1, 2, 3
 };
 
-GLfloat verticesFlyingObject[] = {
+GLfloat verticesFlyingObject[] = 
+{
 	-0.8f, 2.0f, -0.6f,     0.83f, 0.10f, 0.64f,		0.0f, 0.0f,		 0.0f, 0.5f,  0.3f,
 	-0.8f, 2.0f,  0.6f,     0.83f, 0.10f, 0.64f,		1.0f, 0.0f,		 0.0f, 0.5f,  0.4f,
 	 0.8f, 2.0f,  0.6f,     0.83f, 0.10f, 0.64f,		1.0f, 1.0f,		 0.0f, 0.5f,  0.4f,
 	 0.8f, 2.0f, -0.6f,     0.83f, 0.10f, 0.64f,		0.0f, 1.0f,		 0.0f, 0.5f,  0.4f
 };
 
-GLuint indicesFlyingObject[] = {
+GLuint indicesFlyingObject[] = 
+{
 	0, 1, 3,
 	1, 2, 3
 };
 
-GLfloat verticesRoad[] = {
+GLfloat verticesRoad[] = 
+{
 	-1.55f, -0.40f,  1.00f,     0.83f, 0.10f, 0.64f,		0.0f, 1.0f,		 0.0f, 0.5f,  0.3f,
 	 1.55f, -0.40f,  1.00f,     0.83f, 0.10f, 0.64f,		1.0f, 1.0f,		 0.0f, 0.5f,  0.4f,
 	 1.55f, -0.40f,  0.55f,     0.83f, 0.10f, 0.64f,		1.0f, 0.0f,		 0.0f, 0.5f,  0.4f,
@@ -186,7 +195,6 @@ GLuint indicesRoad[] = {
 	0, 1, 3,
 	1, 2, 3
 };
-
 
 
 GLfloat lightVertices[] = {
@@ -387,7 +395,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	// Create camera object
-	Camera camera(width, height, glm::vec3(0.0f, 2.0f, 1.5f));
+	Camera camera(width, height, glm::vec3(0.0f, 0.05f, 1.5f));
 
 
 
@@ -606,10 +614,9 @@ int main()
         transform = glm::translate(transform, glm::vec3(camX, camY, 0.0f));
 
 
-		// transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-        // transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		flyingShader.Activate();
+
 
 		glUniformMatrix4fv(glGetUniformLocation(flyingShader.ID, "transform"), 1, GL_FALSE, glm::value_ptr(transform));
 		glUniform4f(glGetUniformLocation(flyingShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
